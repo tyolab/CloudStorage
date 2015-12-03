@@ -22,7 +22,11 @@
 
 $wgCloundStorageDriver = "gs";
 
-$wgCloudStorageBucket = 'xxxpedia'; // ******* Your S3 bucket to be used *******
+/******* Your S3 / GS bucket to be used *******/
+/*
+ * $wgCloudStorageBucket should be overrided after initiali 
+ */
+$wgCloudStorageBucket = 'BUCKET_NAME'; 
 $wgCloudStorageDirectory = 'images'; // prefix to uploaded files
 $wgUseSSL = false; // true if SSL should be used
 $wgPublic = true; // true if public, false if authentication should be used
