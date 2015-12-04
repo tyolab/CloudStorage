@@ -23,9 +23,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-$file = ($wgGaeHome ? $wgGaeHome : '') . 'google/appengine/api/cloud_storage/CloudStorageTools.php';
+if (is_null($file)) {
+	$file = ($wgGaeHome ? $wgGaeHome : '') . 'google/appengine/api/cloud_storage/CloudStorageTools.php';
+	
+	require_once $file;
+}
 
-require_once $file;
 use google\appengine\api\cloud_storage\CloudStorageTools;
 use Cdb\Exception;
 
