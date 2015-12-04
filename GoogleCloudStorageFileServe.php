@@ -22,7 +22,7 @@
 
 $IP = getenv( 'MW_INSTALL_PATH' );
 if ( $IP === false ) {
-	$IP = (realpath( '.' ) ?: dirname( __DIR__ )) . '/../../';
+	$IP = (realpath( '.' ) ?: dirname( __DIR__ )) . '/../..' . $wgScriptPath;
 	putenv("MW_INSTALL_PATH=$IP");
 }
 
