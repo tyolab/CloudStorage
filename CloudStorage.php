@@ -26,7 +26,10 @@ $wgCloundStorageDriver = "gs";
 /*
  * $wgCloudStorageBucket should be overrided after initiali 
  */
-$wgCloudStorageBucket = 'BUCKET_NAME'; 
+if (empty($wgCloudStorageBucket)){
+	$wgCloudStorageBucket = 'BUCKET_NAME'; // set the name
+	die ("Cloud Storage Bucket is not set yet.");
+}
 $wgCloudStorageDirectory = 'images'; // prefix to uploaded files
 $wgUseSSL = false; // true if SSL should be used
 $wgPublic = true; // true if public, false if authentication should be used
@@ -38,6 +41,8 @@ $wgCss = false;
 
 if ($wgCloundStorageDriver == "gs") {
 	$wgUploadToRepoName = 'GoogleCloudStorage';
+	if ($wgRunOnGae === true)
+		$wgUploadFromUrlClass = 'UploadFromUrlToGoogleCloudStorage';
 	require_once 'GoogleCloudStorage.php';
 	require_once 'UploadFromUrlToGoogleCloudStorage.php';
 }

@@ -30,6 +30,7 @@ if (is_null($file)) {
 }
 
 use google\appengine\api\cloud_storage\CloudStorageTools;
+use google\appengine\api\cloud_storage\CloudStorageException;
 use Cdb\Exception;
 
 require_once 'CloudStorageService.php';
@@ -73,11 +74,13 @@ class GoogleCloudStorageService extends CloudStorageService {
 			
 		}
 		else {
+			wfDebug( __METHOD__ . ": $object_image_file exist.\n" );
 			try {
+// 				$object_image_url = $object_image_file;
 				$object_image_url = CloudStorageTools::getImageServingUrl($object_image_file);
 			}
-			catch (Exception $e) {
-				$object_image_url = $path;
+			catch (CloudStorageException $e) {
+				$object_image_url = $object_image_file;
 			}
 		}
 		return $object_image_url;

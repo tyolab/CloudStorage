@@ -12,6 +12,7 @@ class UploadFromUrlToGoogleCloudStorage extends UploadFromUrl {
 		$tmpFile = TempFSFile::factory( 'URL' );
 		$tmpFile->bind( $this );
 		$tmpFileStr = $wgCss->getBucketUrl() . 'tmp/'. $tmpFile->getSha1Base36();
+		wfDebugLog( 'makeTemporaryFile', $tmpFileStr);
 		return $tmpFileStr;
 	}
 	

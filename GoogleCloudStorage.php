@@ -22,7 +22,7 @@
 global $wgRunOnGae, $wgUploadPath, $wgUploadDirectory;
 
 $wgGaeHome = '';
-if ( !$wgRunOnGae )
+if ( !$wgRunOnGae && empty($wgGaeHome))
 	$wgGaeHome = '/data/tools/GAE/google_appengine/php/sdk/';
 
 $wgCssProtocol = "gs";

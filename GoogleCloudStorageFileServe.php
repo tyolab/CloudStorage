@@ -12,8 +12,7 @@
 * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 *
-*
-*******************************************************************************
+*****************
 *
 * @created  		27/Jun/2015
 * @author			Eric Tang
@@ -21,12 +20,25 @@
 *******************************************************************************/
 
 $IP = getenv( 'MW_INSTALL_PATH' );
+
+if ( empty($wgScriptPath) || $wgScriptPath === false)
+	$wgScriptPath = "/wiki";
+
+if (empty($wgRunOnGae)) {
+	if(isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false) 
+		$wgRunOnGae = true;
+	else 
+		$wgRunOnGae = false;
+}
+
 if ( $IP === false ) {
-	$IP = (realpath( '.' ) ?: dirname( __DIR__ )) . '/../..' . $wgScriptPath;
+	$IP = (realpath( '.' ) ?: dirname( __DIR__ )) . '/../../..' . $wgScriptPath;
 	putenv("MW_INSTALL_PATH=$IP");
 }
 
 require "$IP/includes/WebStart.php";
+
+require_once( "$IP/GoogleAppEngineSettings.php" );
 
 $file = ($wgGaeHome ? $wgGaeHome : '') . 'google/appengine/api/cloud_storage/CloudStorageTools.php';
 
@@ -64,7 +76,7 @@ if ($pos) {
 		// header('Location:' . $url);
 		
 		$localfile = "$IP/" . $imagePathFile; 
-		
+		header("CloudStoragePath:" . $localfile);
 		if(!file_exists($localfile)) {
 			header('HTTP/1.0 404 Not Found');
 			exit();
@@ -94,7 +106,7 @@ if ($pos) {
 		
 		$object_image_file = $wgCss->getBucketUrl() . $imagePathFile;
 		$object_image_url = CloudStorageTools::getImageServingUrl($object_image_file/* , ['size' => 400, 'crop' => true] */);
-		
+		//header("CloudStoragePath:" . $object_image_url);
 		header('Location:' . $object_image_url);
 	}
 }
