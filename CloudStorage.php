@@ -22,6 +22,9 @@
 
 $wgCloundStorageDriver = "gs";
 
+if (empty($wgUseDirectImageServiceUrl))
+	$wgUseDirectImageServiceUrl = false;
+
 /******* Your S3 / GS bucket to be used *******/
 /*
  * $wgCloudStorageBucket should be overrided after initiali 

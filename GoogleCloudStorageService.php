@@ -58,30 +58,37 @@ class GoogleCloudStorageService extends CloudStorageService {
 	}
 	
 	public function getImageServingUrl($path) {
-		$object_image_file = $path;
-		$object_image_url = '/wiki/skins/common/images/ImageNotFound.png';
-		$pos = strpos($path, 'images');
-		if ($pos >= 0) {
-			$imagePathFile = substr($path, $pos);
-			$object_image_file = $this->getBucketUrl() . $imagePathFile;
-		}
+		global $wgUseDirectImageServiceUrl; // translate the "images" file url to actual serving url or not
 		
-		if ( !file_exists($object_image_file) ) {
-			wfDebug( __METHOD__ . ": $object_image_file doesn't exist.\n" );
+		if ($wgUseDirectImageServiceUrl) {
+			$object_image_file = $path;
+			$object_image_url = '/wiki/skins/common/images/ImageNotFound.png';
+			$pos = strpos($path, 'images');
+			if ($pos >= 0) {
+				$imagePathFile = substr($path, $pos);
+				$object_image_file = $this->getBucketUrl() . $imagePathFile;
+			}
 			
-			// TODO
-			// specify a 404 image here
-			
+			if ( !file_exists($object_image_file) ) {
+				wfDebug( __METHOD__ . ": $object_image_file doesn't exist.\n" );
+				
+				// TODO
+				// specify a 404 image here
+				
+			}
+			else {
+				wfDebug( __METHOD__ . ": $object_image_file exist.\n" );
+				try {
+	// 				$object_image_url = $object_image_file;
+					$object_image_url = CloudStorageTools::getImageServingUrl($object_image_file);
+				}
+				catch (CloudStorageException $e) {
+					$object_image_url = $object_image_file;
+				}
+			}
 		}
 		else {
-			wfDebug( __METHOD__ . ": $object_image_file exist.\n" );
-			try {
-// 				$object_image_url = $object_image_file;
-				$object_image_url = CloudStorageTools::getImageServingUrl($object_image_file);
-			}
-			catch (CloudStorageException $e) {
-				$object_image_url = $object_image_file;
-			}
+			$object_image_url = $path;
 		}
 		return $object_image_url;
 	}
