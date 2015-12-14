@@ -41,6 +41,14 @@ class CloudStorageRepo extends FileRepo {
 	}
 	
 	/**
+	 * the local reference of a $url is its $url
+	 * @see FileRepo::getLocalReference()
+	 */
+	public function getLocalReference( $url ) {
+		return new FSFile($url);
+	}
+	
+	/**
 	 * Get the directory corresponding to one of the three basic zones
 	 */
 	function getZonePath( $zone ) {
