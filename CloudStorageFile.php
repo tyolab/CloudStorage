@@ -569,7 +569,7 @@ class CloudStorageFile extends LocalFile {
 	 */
 	function getThumbUrl( $suffix = false ) {
 		global $wgCss;
-		$path = 'images/thumb/' . $this->getThumbRel();
+		$path = parent::getThumbUrl($suffix); //'images/thumb/' . $this->getThumbRel();
 		$thumbFileStr = $wgCss->getImageServingUrl($path);
 		return $thumbFileStr;
 	}

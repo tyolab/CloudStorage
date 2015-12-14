@@ -26,8 +26,37 @@ class CloudStorageRepo extends FileRepo {
 		$this->directory = isset( $info['directory'] ) ? $info['directory'] : $wgCss->getBucketUrl();
 		
 		$this->bucketName = isset( $info['bucket'] ) ? $info['bucket'] : '';
+		
+		if ( isset( $info['thumbDir'] ) ) {
+			$this->thumbDir =  $info['thumbDir'];
+		} else {
+			$this->thumbDir = "{$this->directory}/thumb";
+		}
+		
+		if ( isset( $info['thumbUrl'] ) ) {
+			$this->thumbUrl = $info['thumbUrl'];
+		} else {
+			$this->thumbUrl = "{$this->url}/thumb";
+		}
 	}
 	
+	/**
+	 * Get the directory corresponding to one of the three basic zones
+	 */
+	function getZonePath( $zone ) {
+		switch ( $zone ) {
+			case 'public':
+				return $this->directory;
+			case 'temp':
+				return "{$this->directory}/temp";
+			case 'deleted':
+				return $this->deletedDir;
+			case 'thumb':
+				return $this->thumbDir;
+			default:
+				return false;
+		}
+	}
 
 	public function setBucketName($bucketName) {
 		$this->bucketName = $bucketName;

@@ -32,9 +32,10 @@ if ($wgRunOnGae || $wgUseGoogleStorage === true) {
 }
 else {
 	$wgCssProtocol = "file";
-	$wgCloudStorageBucket = '';
+	$wgCloudStorageBucket = $IP; // for cloud storage always empty, but for local file bucket is $IP
 	//$wgCloudStorageUploadPath = $wgUploadDirectory;
-	$wgCloudStorageUploadPath = "$IP/images";
+	if (empty($wgCloudStorageUploadPath))
+		$wgCloudStorageUploadPath = "images";
 }
 
 $wgFsBackend = $wgCssProtocol;

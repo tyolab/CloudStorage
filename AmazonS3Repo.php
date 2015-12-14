@@ -44,24 +44,6 @@ class AmazonS3Repo extends CloudStorageRepo {
 		($this->CSS_SSL ? "https://" : "http://") . "s3.amazonaws.com/" .
 		$this->bucketName . "/" . $this->directory;
 	}
-
-	/**
-	 * Get the S3 directory corresponding to one of the three basic zones
-	 */
-	function getZonePath( $zone ) {
-		switch ( $zone ) {
-			case 'public':
-				return $this->directory;
-			case 'temp':
-				return "{$this->directory}/temp";
-			case 'deleted':
-				return $this->deletedDir;
-			case 'thumb':
-				return $this->thumbDir;
-			default:
-				return false;
-		}
-	}
 	
 	function newFileFromRow( $row ) {
 		if ( isset( $row->img_name ) ) {
