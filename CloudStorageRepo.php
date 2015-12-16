@@ -27,6 +27,12 @@ class CloudStorageRepo extends FileRepo {
 		
 		$this->bucketName = isset( $info['bucket'] ) ? $info['bucket'] : '';
 		
+		if ( isset( $info['deletedDir'] ) ) {
+			$this->deletedDir =  $info['deletedDir'];
+		} else {
+			$this->deletedDir = "{$this->directory}/archive";
+		}
+		
 		if ( isset( $info['thumbDir'] ) ) {
 			$this->thumbDir =  $info['thumbDir'];
 		} else {
@@ -38,6 +44,26 @@ class CloudStorageRepo extends FileRepo {
 		} else {
 			$this->thumbUrl = "{$this->url}/thumb";
 		}
+		
+		$this->fileMode = isset( $info['fileMode'] ) ? $info['fileMode'] : 0644;
+	}
+	
+	/**
+	 * need to override the parent method
+	 * @see also FileRepo::initDirectory()
+	 */
+	protected function initDirectory( $dir ) {
+		$status = $this->newGood();
+		if (!file_exists($dir)) {
+			$result = mkdir($dir, 0755, true);
+			if ($result == false) {
+				$status->error( 'directorycreateerror', $dir);
+				$status->failCount++;
+			}
+			else 
+				$status->successCount++;
+		}
+		return $status;
 	}
 	
 	/**

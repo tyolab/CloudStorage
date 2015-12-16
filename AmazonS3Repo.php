@@ -14,22 +14,11 @@ class AmazonS3Repo extends CloudStorageRepo {
 		$this->deletedHashLevels = isset( $info['deletedHashLevels'] ) ?
 		$info['deletedHashLevels'] : $this->hashLevels;
 		$this->deletedDir = isset( $info['deletedDir'] ) ? $info['deletedDir'] : false;
-		$this->fileMode = isset( $info['fileMode'] ) ? $info['fileMode'] : 0644;
-		if ( isset( $info['thumbDir'] ) ) {
-			$this->thumbDir =  $info['thumbDir'];
-		} else {
-			$this->thumbDir = "{$this->directory}/thumb";
-		}
+
 		$this->urlbase = $info['urlbase'];
 		
 		if (!$this->directory)
 			$this->directory = isset( $info['directory'] ) ? $info['directory'] : "http://s3.amazonaws.com/$wgUploadS3Bucket/$wgCloudStorageDirectory";
-		
-		if ( isset( $info['thumbUrl'] ) ) {
-			$this->thumbUrl = $info['thumbUrl'];
-		} else {
-			$this->thumbUrl = "{$this->url}/thumb";
-		}
 		
 		$this->CSS_ACCESS_KEY = $info['AWS_ACCESS_KEY'];
 		$this->CSS_SECRET_KEY = $info['AWS_SECRET_KEY'];

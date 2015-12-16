@@ -56,16 +56,12 @@ $wgCloudStorageDirectory = $wgCloudStorageUrl . $wgCloudStorageUploadPath;
 		'deletedDir' => $wgCloudStorageDirectory.'/deleted',
 		'deletedHashLevels' => $wgHashedUploadDirectory ? 3 : 0,
  ********************************************************************************************************************/
-$wgLocalFileRepo = array(
-		'class' => 'GoogleCloudStorageRepo',
-		'name' => 'gs',
-		'directory' => $wgCloudStorageDirectory,
-		'scriptDirUrl' => $wgScriptPath,
-		'scriptExtension' => $wgScriptExtension,
-		'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
-		'thumbUrl' => $wgUploadThumbUrl ? $wgUploadThumbUrl : $wgUploadPath . '/thumb',
-		'bucket' => $wgCloudStorageBucket
-);
+if (!class_exists('CloudStorageFileBackend')) require_once( "CloudStorageFileBackend.php");
+
+require_once("CloudStorageRepo.php");
+require_once("GoogleCloudStorageFile.php");
+require_once("CloudStorageFileArchive.php");
+require_once("GoogleCloudStorageRepo.php");
 
 if (!class_exists('GoogleCloudStorageService')) require_once( "GoogleCloudStorageService.php");
 
@@ -74,7 +70,16 @@ $wgCss = new GoogleCloudStorageService();
 $wgCss->setProtocol($wgCssProtocol);
 $wgCss->setBucketName($wgCloudStorageBucket);
 
-require_once("CloudStorageRepo.php");
-require_once("GoogleCloudStorageFile.php");
-require_once("CloudStorageFileArchive.php");
-require_once("GoogleCloudStorageRepo.php");
+
+$wgLocalFileRepo = array(
+		'class' => 'GoogleCloudStorageRepo',
+		'name' => 'gs',
+		'backend' => new CloudStorageFileBackend( array( name => 'CloudStorageFileBackend',
+								'wikiId' => wfWikiID(), ) ),
+		'directory' => $wgCloudStorageDirectory,
+		'scriptDirUrl' => $wgScriptPath,
+		'scriptExtension' => $wgScriptExtension,
+		'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
+		'thumbUrl' => $wgUploadThumbUrl ? $wgUploadThumbUrl : $wgUploadPath . '/thumb',
+		'bucket' => $wgCloudStorageBucket
+);
