@@ -105,7 +105,7 @@ if ($pos) {
 		global $wgCss;
 		
 		$object_image_file = $wgCss->getBucketUrl() . $imagePathFile;
-		$object_image_url = CloudStorageTools::getImageServingUrl($object_image_file/* , ['size' => 400, 'crop' => true] */);
+		$object_image_url = CloudStorageTools::getImageServingUrl($object_image_file, ['size' => 0/* , 'crop' => true] */]);
 		//header("CloudStoragePath:" . $object_image_url);
 		header('Location:' . $object_image_url);
 	}
