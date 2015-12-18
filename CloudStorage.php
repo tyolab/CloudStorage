@@ -33,7 +33,10 @@ if (empty($wgCloudStorageBucket)){
 	$wgCloudStorageBucket = 'BUCKET_NAME'; // set the name
 	die ("Cloud Storage Bucket is not set yet.");
 }
-$wgCloudStorageDirectory = 'images'; // prefix to uploaded files
+
+if (empty($wgCloudStorageDirectory))
+	$wgCloudStorageDirectory = 'images'; // prefix to uploaded files
+
 $wgUseSSL = false; // true if SSL should be used
 $wgPublic = true; // true if public, false if authentication should be used
 

@@ -80,7 +80,7 @@ class GoogleCloudStorageService extends CloudStorageService {
 				wfDebug( __METHOD__ . ": $object_image_file exist.\n" );
 				try {
 	// 				$object_image_url = $object_image_file;
-					$object_image_url = CloudStorageTools::getImageServingUrl($object_image_file, ['size' => 0/* , 'crop' => true] */]);
+					$object_image_url = CloudStorageTools::getImageServingUrl($object_image_file, ['size' => 0, 'secure_url' => true, /* , 'crop' => true] */]);
 				}
 				catch (CloudStorageException $e) {
 					$object_image_url = $object_image_file;
