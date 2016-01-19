@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+		"Eric Tang@TYO Lab"
+		]
+	},
+	"cloudstorage-desc": "Cloud Storage support for uploaded / media files"
+}

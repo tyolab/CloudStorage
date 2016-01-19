@@ -20,6 +20,20 @@
  *
  *******************************************************************************/
 
+$wgExtensionCredits['cloudstorage'][] = array(
+		'path' => __FILE__,
+		'author' => 'Eric Tang@TYO Lab',
+		'name' => 'cloudstorage',
+		'url' => 'https://www.mediawiki.org/wiki/Extension:CloudStorage',
+		'descriptionmsg' => 'cloudstorage-desc',
+		'license-name' => 'GPL-2.0+',
+);
+
+$wgMessagesDirs['CloudStorage'] = __DIR__ . '/i18n';
+$wgExtensionMessagesFiles['CloudStorage'] = $dir . '/CloudStorage.i18n.php';
+
+/******************************************************************************/
+
 $wgCloundStorageDriver = "gs";
 
 if (empty($wgUseDirectImageServiceUrl))
@@ -29,7 +43,7 @@ if (empty($wgUseDirectImageServiceUrl))
 /*
  * $wgCloudStorageBucket should be overrided after initiali 
  */
-if (empty($wgCloudStorageBucket)){
+if ($wgUseGoogleStorage == true && empty($wgCloudStorageBucket)){
 	$wgCloudStorageBucket = 'BUCKET_NAME'; // set the name
 	die ("Cloud Storage Bucket is not set yet.");
 }

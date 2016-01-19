@@ -21,9 +21,14 @@
 *******************************************************************************/
 global $wgRunOnGae, $wgUploadPath, $wgUploadDirectory;
 
-$wgGaeHome = '';
-if ( !$wgRunOnGae && empty($wgGaeHome))
-	$wgGaeHome = '/data/tools/GAE/google_appengine/php/sdk/';
+// 
+if ($wgRunOnLocalGae) {
+	if (empty($wgGaeHome)) {
+		die ("Please setup \$wgGaeHome in your LocalSettings.php, for example, \$wgGaeHome=/data/tools/GAE/google_appengine/php/sdk/");
+	}
+}
+else 
+	$wgGaeHome = '';
 
 $wgCssProtocol = "gs";
 
