@@ -23,7 +23,7 @@
 $wgExtensionCredits['cloudstorage'][] = array(
 		'path' => __FILE__,
 		'author' => 'Eric Tang@TYO Lab',
-		'name' => 'cloudstorage',
+		'name' => 'CloudStorage',
 		'url' => 'https://www.mediawiki.org/wiki/Extension:CloudStorage',
 		'descriptionmsg' => 'cloudstorage-desc',
 		'license-name' => 'GPL-2.0+',

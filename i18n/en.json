@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-		"Eric Tang@TYO Lab"
+		"Eric Tang@[[http://tyo.com.au TYO Lab]]"
 		]
 	},
-	"cloudstorage-desc": "Cloud Storage support for uploaded / media files"
+	"cloudstorage": "CloudStorage",
+	"cloudstorage-desc": "Cloud storage support for uploading / storing media files in the cloud"
 }
